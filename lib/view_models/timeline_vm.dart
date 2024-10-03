@@ -50,7 +50,7 @@ class TimelineModel extends ChangeNotifier {
       title: 'Service Engineer 🇮🇳',
       subtitle: 'Nisa Eye',
       description:
-          'Developed machine operating skills, managed a team, handled troubleshooting and maintenance.',
+          "Installed and configured CCTV and sensor systems, led troubleshooting efforts, and applied critical thinking to resolve complex issues while managing a team and ensuring smooth operations.",
       isBranchStart: true,
       skills: [
         Skill(title: 'CCTV Installation'),
