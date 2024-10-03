@@ -1,6 +1,5 @@
 import 'package:basilbaby/models/skill.dart';
 import 'package:flutter/material.dart';
-import 'package:go_router/go_router.dart';
 
 class SkillsGrid extends StatefulWidget {
   final List<Skill> skills;
@@ -14,26 +13,20 @@ class SkillsGrid extends StatefulWidget {
 class SkillsGridState extends State<SkillsGrid> {
   @override
   Widget build(BuildContext context) {
-    final bool isTimelineRoute =
-        GoRouterState.of(context).matchedLocation.startsWith('/timeline');
-    // Get the screen width
     final screenWidth = MediaQuery.of(context).size.width;
     // Define the item width factor based on screen width
     double itemWidthFactor;
     if (screenWidth > 1200) {
       // Web
-      itemWidthFactor = 0.1;
+      itemWidthFactor = 0.15;
     } else if (screenWidth > 768) {
       // Tablet
-      itemWidthFactor = 0.15;
+      itemWidthFactor = 0.25;
     } else {
       // Mobile
       itemWidthFactor = 0.25;
     }
-    var itemWidth = screenWidth * itemWidthFactor;
-    if (isTimelineRoute) {
-      itemWidth = screenWidth * 0.25;
-    }
+    final itemWidth = screenWidth * itemWidthFactor;
 
     // Calculate how many columns we can fit in the available screen width
     final crossAxisCount = (screenWidth / itemWidth).floor();
