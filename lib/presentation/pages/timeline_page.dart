@@ -1,39 +1,40 @@
-import 'package:basilbaby/core/constants/strings.dart';
+import 'package:basilbaby/presentation/pages/timeline_details.dart';
+import 'package:basilbaby/presentation/widgets/timeline_component.dart';
+import 'package:basilbaby/view_models/timeline_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:provider/provider.dart';
 
-class TimelinePage extends StatefulWidget {
+class TimelinePage extends StatelessWidget {
   const TimelinePage({super.key});
 
   @override
-  TimelinePageState createState() => TimelinePageState();
-}
-
-class TimelinePageState extends State<TimelinePage> {
-  @override
   Widget build(BuildContext context) {
+    final vm = Provider.of<TimelineModel>(context);
+    var timeline = vm.items.reversed.toList();
+    var isWideScreen = MediaQuery.of(context).size.width > 768;
+
     return Scaffold(
       appBar: AppBar(
-        title: const Text(kTimeline),
+        title: const Text('Timeline'),
       ),
-      body: const Center(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Icon(
-              Icons.hourglass_empty,
+      body: Row(
+        children: [
+          Expanded(
+            flex: 1,
+            child: ListView.builder(
+              itemCount: timeline.length,
+              itemBuilder: (context, index) {
+                return AnimatedGitCommitWidget(
+                  item: timeline[index],
+                  nextItem: index > 0 ? timeline[index - 1] : null,
+                  prevItem:
+                      index < timeline.length - 1 ? timeline[index + 1] : null,
+                );
+              },
             ),
-            SizedBox(height: 20),
-            Text(
-              'Working in Progress',
-              style: TextStyle(fontSize: 24, fontWeight: FontWeight.bold),
-            ),
-            SizedBox(height: 10),
-            Text(
-              'Please check back later!',
-              style: TextStyle(fontSize: 16),
-            ),
-          ],
-        ),
+          ),
+          if (isWideScreen) const Expanded(child: TimelineDetailsScreen())
+        ],
       ),
     );
   }
