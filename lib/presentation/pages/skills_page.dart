@@ -72,7 +72,7 @@ class SkillsPage extends HookWidget {
                             kSearchEmptyMessage,
                             style: TextStyle(
                               fontSize: 16,
-                              color: Colors.grey,
+                              color: Colors.white,
                               fontWeight: FontWeight.bold,
                               shadows: [
                                 Shadow(
