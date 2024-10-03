@@ -16,7 +16,7 @@ jobs:
       - name: Set up Flutter
         uses: subosito/flutter-action@v2  # Use the Flutter GitHub Action to set up Flutter
         with:
-          flutter-version: 'latest'  # Specify the Flutter version to use
+          flutter-version: '3.19.0'  # Specify the Flutter version to use
 
       - name: Build Flutter Web
         run: |
@@ -26,6 +26,6 @@ jobs:
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3  # Use the action to deploy to GitHub Pages
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}  # Use the GitHub token for authentication
+          github_token: ${{ secrets.MY_PAT }}  # Use the GitHub token for authentication
           publish_dir: ./build/web  # Specify the directory to publish
           publish_branch: gh-pages  # Specify the branch to publish to
