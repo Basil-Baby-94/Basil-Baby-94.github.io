@@ -55,14 +55,17 @@ class AnimatedGitCommitWidget extends HookWidget {
         child: GestureDetector(
           onTap: !isWideScreen
               ? () {
-                  handleSelectItem();
-                  context.go('/timeline/details');
+                  if (item.skills.isNotEmpty ||
+                      item.title == "India 🇮🇳 -> Sweden 🇸🇪") {
+                    handleSelectItem();
+                    context.go('/timeline/details');
+                  }
                 }
               : null,
           child: MouseRegion(
             onEnter: (_) => handleHover(true),
-            onExit: (_) =>
-                handleHover(false), // Uncomment if hover exit is needed
+            // onExit: (_) =>
+            //     handleHover(false), // Uncomment if hover exit is needed
             cursor: SystemMouseCursors.click,
             child: IntrinsicHeight(
               child: Row(
