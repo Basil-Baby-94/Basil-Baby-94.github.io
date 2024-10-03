@@ -61,8 +61,8 @@ class AnimatedGitCommitWidget extends HookWidget {
               : null,
           child: MouseRegion(
             onEnter: (_) => handleHover(true),
-            onExit: (_) =>
-                handleHover(false), // Uncomment if hover exit is needed
+            // onExit: (_) =>
+            //     handleHover(false), // Uncomment if hover exit is needed
             cursor: SystemMouseCursors.click,
             child: IntrinsicHeight(
               child: Row(
