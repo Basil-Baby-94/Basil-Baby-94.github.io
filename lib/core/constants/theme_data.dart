@@ -29,7 +29,7 @@ final themeData = ThemeData.dark().copyWith(
     ),
   ),
   iconTheme: IconThemeData(
-    color: kPrimary, // Color of the icons
+    color: kPrimaryColor, // Color of the icons
     size: 30, // Size of the icons
   ),
 );

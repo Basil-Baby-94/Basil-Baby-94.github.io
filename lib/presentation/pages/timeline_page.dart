@@ -1,3 +1,4 @@
+import 'package:basilbaby/core/constants/strings.dart';
 import 'package:basilbaby/presentation/pages/timeline_details.dart';
 import 'package:basilbaby/presentation/widgets/timeline_component.dart';
 import 'package:basilbaby/view_models/timeline_vm.dart';
@@ -15,7 +16,7 @@ class TimelinePage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Timeline'),
+        title: const Text(kTimeline),
       ),
       body: Row(
         children: [

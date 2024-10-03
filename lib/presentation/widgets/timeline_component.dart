@@ -1,11 +1,13 @@
+import 'package:basilbaby/core/app_constants.dart';
 import 'package:basilbaby/models/timeline.dart';
 import 'package:basilbaby/presentation/widgets/branch_painter.dart';
 import 'package:basilbaby/view_models/timeline_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 
-class AnimatedGitCommitWidget extends StatefulWidget {
+class AnimatedGitCommitWidget extends HookWidget {
   final TimelineItem item;
   final TimelineItem? prevItem;
   final TimelineItem? nextItem;
@@ -18,55 +20,50 @@ class AnimatedGitCommitWidget extends StatefulWidget {
   });
 
   @override
-  AnimatedGitCommitWidgetState createState() => AnimatedGitCommitWidgetState();
-}
-
-class AnimatedGitCommitWidgetState extends State<AnimatedGitCommitWidget> {
-  bool _isVisible = false;
-
-  @override
-  void initState() {
-    super.initState();
-    Future.delayed(const Duration(milliseconds: 100), () {
-      if (mounted) {
-        setState(() {
-          _isVisible = true;
-        });
-      }
-    });
-  }
-
-  void _handleHover(bool hovering) {
-    Provider.of<TimelineModel>(context, listen: false)
-        .updateHoverState(widget.item, hovering);
-  }
-
-  void _handleSelectItem() {
-    Provider.of<TimelineModel>(context, listen: false).selectItem(widget.item);
-  }
-
-  @override
   Widget build(BuildContext context) {
+    // Hook for managing visibility state
+    final isVisible = useState(false);
+
+    // Effect to handle delayed visibility
+    useEffect(() {
+      Future.delayed(const Duration(milliseconds: 100), () {
+        isVisible.value = true;
+      });
+      return null; // No cleanup needed
+    }, []); // Empty dependencies array to run only once
+
+    // Function to handle hover state
+    void handleHover(bool hovering) {
+      Provider.of<TimelineModel>(context, listen: false)
+          .updateHoverState(item, hovering);
+    }
+
+    // Function to handle item selection
+    void handleSelectItem() {
+      Provider.of<TimelineModel>(context, listen: false).selectItem(item);
+    }
+
     var isWideScreen = MediaQuery.of(context).size.width > 768;
-    final item = widget.item;
+
     return AnimatedOpacity(
-      opacity: _isVisible ? 1.0 : 0.0,
+      opacity: isVisible.value ? 1.0 : 0.0,
       duration: const Duration(milliseconds: 500),
       child: AnimatedSlide(
-        offset: _isVisible ? Offset.zero : const Offset(0, 1),
+        offset: isVisible.value ? Offset.zero : const Offset(0, 1),
         duration: const Duration(milliseconds: 1000),
         curve: Curves.easeOutCubic,
         child: GestureDetector(
           onTap: !isWideScreen
               ? () {
-                  _handleSelectItem();
+                  handleSelectItem();
                   context.go('/timeline/details');
                 }
               : null,
           child: MouseRegion(
-            onEnter: (_) => _handleHover(true),
-            // onExit: (_) => _handleHover(false),
-            cursor: SystemMouseCursors.click, // Change the mouse pointer
+            onEnter: (_) => handleHover(true),
+            onExit: (_) =>
+                handleHover(false), // Uncomment if hover exit is needed
+            cursor: SystemMouseCursors.click,
             child: IntrinsicHeight(
               child: Row(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -83,8 +80,7 @@ class AnimatedGitCommitWidgetState extends State<AnimatedGitCommitWidget> {
                       margin: const EdgeInsets.symmetric(vertical: 8),
                       decoration: BoxDecoration(
                         color: item.isHovering
-                            ? Colors.green.shade400
-                                .withOpacity(0.4) // Hover color
+                            ? kGreen.shade400.withOpacity(0.4) // Hover color
                             : Colors.white.withAlpha(30), // Default color
                         borderRadius: BorderRadius.circular(10),
                       ),
@@ -133,9 +129,9 @@ class AnimatedGitCommitWidgetState extends State<AnimatedGitCommitWidget> {
     return CustomPaint(
       size: const Size(80, double.infinity),
       painter: BranchPainter(
-        currentItem: widget.item,
-        prevItem: widget.prevItem,
-        nextItem: widget.nextItem,
+        currentItem: item,
+        prevItem: prevItem,
+        nextItem: nextItem,
       ),
     );
   }
@@ -145,7 +141,7 @@ class AnimatedGitCommitWidgetState extends State<AnimatedGitCommitWidget> {
       case 'main':
         return Colors.blue;
       case 'future/work':
-        return Colors.green;
+        return kGreen;
       case 'future/study':
         return Colors.orange;
       default:
