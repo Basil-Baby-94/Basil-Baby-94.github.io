@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <base href="/">
+
+  <meta charset="UTF-8">
+  <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+  <meta name="description" content="A new Flutter project.">
+
+  <!-- iOS meta tags & icons -->
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black">
+  <meta name="apple-mobile-web-app-title" content="basilbaby">
+  <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+  <!-- Favicon -->
+  <link rel="icon" type="image/png" href="favicon.png"/>
+
+  <title>Basil Baby</title>
+  <link rel="manifest" href="manifest.json">
+
+  <script>
+    // The value below is injected by flutter build, do not touch.
+    const serviceWorkerVersion = "4001685081";
+  </script>
+  <!-- This script adds the flutter initialization JS code -->
+  <script src="flutter.js" defer></script>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: linear-gradient(135deg, #000000 0%, #005500 100%);
+      min-height: 100vh;
+    }
+    #loading {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background: inherit;
+      z-index: 9999;
+    }
+    .loader {
+      width: 50px;
+      height: 50px;
+      border: 5px solid #66BB6A;
+      border-bottom-color: transparent;
+      border-radius: 50%;
+      display: inline-block;
+      box-sizing: border-box;
+      animation: rotation 1s linear infinite;
+    }
+    @keyframes rotation {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
+    }
+    /* Hide the default Flutter loader */
+    .flutter-loader { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="loading">
+    <div class="loader"></div>
+  </div>
+
+  <script>
+    window.addEventListener('load', function(ev) {
+      var loading = document.querySelector('#loading');
+      
+      // Forcefully remove the default Flutter loader
+      var defaultLoader = document.querySelector('.flutter-loader');
+      if (defaultLoader) {
+        defaultLoader.remove();
+      }
+
+      // Initialize Flutter
+      _flutter.loader.loadEntrypoint({
+        serviceWorker: {
+          serviceWorkerVersion: serviceWorkerVersion,
+        },
+        onEntrypointLoaded: function(engineInitializer) {
+          engineInitializer.initializeEngine().then(function(appRunner) {
+            return appRunner.runApp();
+          }).then(function(app) {
+            // Wait a bit before removing the loading indicator
+            window.setTimeout(function() {
+              loading.remove();
+            }, 200); // Adjust this delay as needed
+          });
+        }
+      });
+    });
+  </script>
+</body>
+</html>
