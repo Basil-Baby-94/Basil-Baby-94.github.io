@@ -4,29 +4,25 @@ import 'package:basilbaby/presentation/widgets/skills_background.dart';
 import 'package:basilbaby/presentation/widgets/skills_grid.dart';
 import 'package:basilbaby/view_models/timeline_vm.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:provider/provider.dart';
 
-class SkillsPage extends StatefulWidget {
+class SkillsPage extends HookWidget {
   const SkillsPage({super.key});
-
-  @override
-  SkillsPageState createState() => SkillsPageState();
-}
-
-class SkillsPageState extends State<SkillsPage> {
-  String searchQuery = ''; // To store the search query
 
   @override
   Widget build(BuildContext context) {
     final vm = Provider.of<TimelineModel>(context);
 
+    // Manage the search query using useState
+    final searchQuery = useState('');
+
     // Get all unique skills and filter them by the search query
     final filteredSkills = vm.items
         .expand((item) => item.skills)
         .toSet()
-        .where((skill) => skill.title
-            .toLowerCase()
-            .contains(searchQuery.toLowerCase())) // Filter by search query
+        .where((skill) => skill.title.toLowerCase().contains(
+            searchQuery.value.toLowerCase())) // Filter by search query
         .toList();
 
     return Scaffold(
@@ -52,9 +48,8 @@ class SkillsPageState extends State<SkillsPage> {
                       prefixIcon: Icon(Icons.search),
                     ),
                     onChanged: (value) {
-                      setState(() {
-                        searchQuery = value;
-                      });
+                      // Update the search query when the user types in the search bar
+                      searchQuery.value = value;
                     },
                   ),
                 ),
@@ -79,8 +74,6 @@ class SkillsPageState extends State<SkillsPage> {
                               fontSize: 16,
                               color: Colors.grey,
                               fontWeight: FontWeight.bold,
-                              // backgroundColor:
-                              //     kPrimaryColor.withOpacity(0.2),
                               shadows: [
                                 Shadow(
                                   offset: Offset(
@@ -89,7 +82,7 @@ class SkillsPageState extends State<SkillsPage> {
                                   color: kGreen, // Shadow color
                                 ),
                               ],
-                            ), // Customize the style as needed
+                            ),
                             textAlign: TextAlign
                                 .center, // Center the text for better visibility
                           ),

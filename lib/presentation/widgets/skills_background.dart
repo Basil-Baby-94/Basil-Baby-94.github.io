@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
 import 'dart:math' as math;
 
+import 'package:flutter_hooks/flutter_hooks.dart';
+
 class Particle {
   Offset position;
 
@@ -97,97 +99,85 @@ class BackgroundPainter extends CustomPainter {
   }
 }
 
-class AnimatedBackground extends StatefulWidget {
+class AnimatedBackground extends HookWidget {
   final Widget child;
 
   const AnimatedBackground({super.key, required this.child});
 
   @override
-  AnimatedBackgroundState createState() => AnimatedBackgroundState();
-}
+  Widget build(BuildContext context) {
+    final particles = useState<List<Particle>>([]);
+    final mousePosition = useState(Offset.zero);
+    final lastSize = useState<Size?>(null);
 
-class AnimatedBackgroundState extends State<AnimatedBackground>
-    with SingleTickerProviderStateMixin {
-  late AnimationController _controller;
-  List<Particle> particles = [];
-  Offset mousePosition = Offset.zero;
-  Size? _lastSize;
-
-  @override
-  void initState() {
-    super.initState();
-    _controller = AnimationController(
-      vsync: this,
+    // Animation controller setup using hooks
+    final controller = useAnimationController(
       duration: const Duration(seconds: 10),
     )..repeat();
 
-    WidgetsBinding.instance.addPostFrameCallback((_) {
-      _updateParticles();
-    });
-  }
+    List<Particle> generateUniqueParticles(Size size, int particleCount) {
+      final List<Offset> possiblePositions = [];
 
-  @override
-  void dispose() {
-    _controller.dispose();
-    super.dispose();
-  }
+      for (double x = 0; x < size.width; x += 20) {
+        for (double y = 0; y < size.height; y += 20) {
+          possiblePositions.add(Offset(x, y));
+        }
+      }
 
-  void _updateMousePosition(PointerEvent details) {
-    setState(() {
-      mousePosition = details.localPosition;
-    });
-  }
+      possiblePositions.shuffle(math.Random());
 
-  void _updateParticles() {
-    final size = MediaQuery.of(context).size;
-    if (_lastSize != size) {
-      setState(() {
-        particles = generateUniqueParticles(size, size.width > 768 ? 200 : 100);
-        _lastSize = size;
-      });
+      return possiblePositions
+          .take(particleCount)
+          .map((offset) => Particle(offset))
+          .toList();
     }
-  }
 
-  List<Particle> generateUniqueParticles(Size size, int particleCount) {
-    final List<Offset> possiblePositions = [];
-
-    for (double x = 0; x < size.width; x += 20) {
-      for (double y = 0; y < size.height; y += 20) {
-        possiblePositions.add(Offset(x, y));
+    // Function to generate unique particles based on screen size
+    void updateParticles() {
+      final size = MediaQuery.of(context).size;
+      if (lastSize.value != size) {
+        final particleCount = size.width > 768 ? 200 : 100;
+        particles.value = generateUniqueParticles(size, particleCount);
+        lastSize.value = size;
       }
     }
 
-    possiblePositions.shuffle(math.Random());
+    // Initialize and update particles after the first frame and on size changes
+    useEffect(() {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+        updateParticles();
+      });
 
-    return possiblePositions
-        .take(particleCount)
-        .map((offset) => Particle(offset))
-        .toList();
-  }
+      return null; // Clean up the controller on dispose
+    }, [controller]);
 
-  @override
-  Widget build(BuildContext context) {
+    // Update mouse position on hover
+    void updateMousePosition(PointerEvent details) {
+      mousePosition.value = details.localPosition;
+    }
+
     return LayoutBuilder(
       builder: (context, constraints) {
         WidgetsBinding.instance.addPostFrameCallback((_) {
-          _updateParticles();
+          updateParticles();
         });
+
         return MouseRegion(
-          onHover: _updateMousePosition,
+          onHover: updateMousePosition,
           child: AnimatedBuilder(
-            animation: _controller,
+            animation: controller,
             builder: (context, child) {
               return CustomPaint(
                 painter: BackgroundPainter(
-                  particles: particles,
-                  mousePosition: mousePosition,
-                  animation: _controller,
+                  particles: particles.value,
+                  mousePosition: mousePosition.value,
+                  animation: controller,
                 ),
                 size: Size(constraints.maxWidth, constraints.maxHeight),
                 child: child,
               );
             },
-            child: widget.child,
+            child: child,
           ),
         );
       },
