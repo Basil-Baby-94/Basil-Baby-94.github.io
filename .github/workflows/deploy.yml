@@ -21,7 +21,7 @@ jobs:
       - name: Build Flutter Web
         run: |
           flutter pub get  # Install dependencies
-          flutter build web --release  # Build the web application
+          flutter build web --release --web-renderer canvaskit  # Build the web application
 
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3  # Use the action to deploy to GitHub Pages
