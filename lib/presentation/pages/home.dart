@@ -1,5 +1,6 @@
 import 'package:basilbaby/core/app_constants.dart';
 import 'package:basilbaby/core/constants/strings.dart';
+import 'package:basilbaby/presentation/widgets/skills_background.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -21,7 +22,7 @@ class HomeScreen extends StatelessWidget {
             child: SafeArea(
               child: Stack(
                 children: [
-                  _buildProfileSection(context),
+                  AnimatedBackground(child: _buildProfileSection(context)),
                   // Bottom Left Button
                   Positioned(
                     bottom: 40,
