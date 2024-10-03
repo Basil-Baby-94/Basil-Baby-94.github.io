@@ -256,6 +256,7 @@ class TimelineModel extends ChangeNotifier {
         Skill(title: 'MVVM'),
         Skill(title: 'AWS'),
         Skill(title: 'AR Objects'),
+        Skill(title: 'SwiftUI'),
       ],
     ),
   ];
