@@ -1,6 +1,8 @@
 import 'package:basilbaby/core/app_constants.dart';
 import 'package:basilbaby/core/constants/strings.dart';
+import 'package:basilbaby/models/social.dart';
 import 'package:basilbaby/presentation/widgets/skills_background.dart';
+import 'package:basilbaby/presentation/widgets/social_media_icon.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -101,13 +103,23 @@ class HomeScreen extends StatelessWidget {
           const Text(
             kName,
             style: TextStyle(
-                fontSize: 28, fontWeight: FontWeight.bold, color: kWhite),
-          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 1),
+              fontSize: 28,
+              fontWeight: FontWeight.bold,
+              color: kWhite,
+            ),
+          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 0),
           const SizedBox(height: 10),
           const Text(
             kJobTitle,
             style: TextStyle(fontSize: 20, color: kWhite),
-          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 1),
+          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 0),
+          const SizedBox(height: 20),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: socialMediaAccounts
+                .map((e) => SocialMediaIcon(data: e))
+                .toList(),
+          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 0),
           const SizedBox(height: 20),
           ElevatedButton.icon(
             icon: const Icon(Icons.timeline, size: 32),
@@ -117,12 +129,13 @@ class HomeScreen extends StatelessWidget {
               backgroundColor: kWhite.withOpacity(0.3),
               padding: const EdgeInsets.symmetric(horizontal: 32, vertical: 16),
               shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30)),
+                borderRadius: BorderRadius.circular(30),
+              ),
             ),
             onPressed: () {
-              context.go("/timeline");
+              context.go('/timeline');
             },
-          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 1),
+          ).animate().fadeIn(duration: 600.ms).slideY(begin: 0.2, end: 0),
         ],
       ),
     );
