@@ -1,6 +1,8 @@
 import 'package:basilbaby/core/app_constants.dart';
 import 'package:basilbaby/models/project.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -90,7 +92,7 @@ class ProjectCard extends HookWidget {
                         Text(
                           project.description,
                           style: Theme.of(context).textTheme.bodyMedium,
-                          maxLines: 3,
+                          maxLines: 6,
                           overflow: TextOverflow.ellipsis,
                         ),
                       ],

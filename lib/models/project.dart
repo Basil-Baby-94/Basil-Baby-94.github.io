@@ -71,4 +71,20 @@ final List<Project> projects = [
         "Salus is a revolutionary technology solution developed for HSSEQ (Health, Safety, Security, Environmental and Quality) management across any industry.",
     link: "https://play.google.com/store/apps/details?id=com.ajax.salus2_0",
   ),
+  const Project(
+    banner: "assets/projects/klosa.png",
+    icon: "assets/projects/klosa_icon.png",
+    title: "Klosa Dance",
+    description:
+        "Learn new dances from world famous artists with the AI showing you exactly how you are doing. The AI evaluates your entire body for position and timing throughout the dance and helps all dancers get to the next level.",
+    link: "https://apps.apple.com/us/app/klosa-dance/id1632566650",
+  ),
+  const Project(
+    banner: "assets/projects/clear_image.png",
+    icon: "assets/projects/clear_image_icon.png",
+    title: "Clear Image AI",
+    description:
+        "This project encompasses the development of multiple mobile applications designed to provide fast and cost-effective automated data annotation services for AI projects. Each app is tailored to streamline the data annotation process while incorporating Bluetooth technology for efficient hardware communication.",
+    link: "https://clearimageai.com/",
+  )
 ];
