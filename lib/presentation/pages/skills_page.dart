@@ -117,9 +117,9 @@ class SkillsPage extends HookWidget {
     }
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(kSkills),
-      ),
+      // appBar: AppBar(
+      //   title: const Text(kSkills),
+      // ),
       body: bodyContent(),
     );
   }

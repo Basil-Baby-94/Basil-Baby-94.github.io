@@ -1,4 +1,3 @@
-import 'package:basilbaby/core/constants/strings.dart';
 import 'package:basilbaby/models/project.dart';
 import 'package:basilbaby/presentation/widgets/project_card.dart';
 import 'package:flutter/material.dart';
@@ -16,9 +15,9 @@ class ProjectPageState extends State<ProjectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(kProjects),
-      ),
+      // appBar: AppBar(
+      //   title: const Text(kProjects),
+      // ),
       body: ResponsiveProjectGrid(projects: projects),
     );
   }

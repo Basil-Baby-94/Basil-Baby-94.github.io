@@ -1,8 +1,6 @@
 import 'package:basilbaby/core/app_constants.dart';
 import 'package:basilbaby/models/project.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:url_launcher/url_launcher.dart';
 
@@ -17,28 +15,28 @@ class ProjectCard extends HookWidget {
     final isTablet = size.width < 768;
     final isHovered = useState(false);
 
-    return MouseRegion(
-      onEnter: (_) => isHovered.value = true,
-      onExit: (_) => isHovered.value = false,
-      child: GestureDetector(
-        onTap: () => _launchURL(project.link),
-        child: Padding(
-          padding: EdgeInsets.all(isHovered.value ? 8 : 20),
-          child: AnimatedContainer(
-            duration: const Duration(milliseconds: 200),
-            curve: Curves.easeInOut,
-            // transform: Matrix4.identity()..scale(isHovered.value ? 1.0 : 0.8),
-            decoration: BoxDecoration(
-              color: kPrimaryColor.withOpacity(0.1),
-              borderRadius: BorderRadius.circular(16),
-              boxShadow: [
-                BoxShadow(
-                  color: kPrimaryColor.withOpacity(isHovered.value ? 0.3 : 0.1),
-                  blurRadius: 4,
-                  offset: const Offset(0, 2),
-                ),
-              ],
-            ),
+    return GestureDetector(
+      onTap: () => _launchURL(project.link),
+      child: Padding(
+        padding: EdgeInsets.all(isHovered.value ? 8 : 20),
+        child: AnimatedContainer(
+          duration: const Duration(milliseconds: 200),
+          curve: Curves.easeInOut,
+          // transform: Matrix4.identity()..scale(isHovered.value ? 1.0 : 0.8),
+          decoration: BoxDecoration(
+            color: kPrimaryColor.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(16),
+            boxShadow: [
+              BoxShadow(
+                color: kPrimaryColor.withOpacity(isHovered.value ? 0.3 : 0.1),
+                blurRadius: 4,
+                offset: const Offset(0, 2),
+              ),
+            ],
+          ),
+          child: MouseRegion(
+            onEnter: (_) => isHovered.value = true,
+            onExit: (_) => isHovered.value = false,
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [

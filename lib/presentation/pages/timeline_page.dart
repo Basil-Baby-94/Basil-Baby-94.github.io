@@ -15,9 +15,9 @@ class TimelinePage extends StatelessWidget {
     var isWideScreen = MediaQuery.of(context).size.width > 768;
 
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(kTimeline),
-      ),
+      // appBar: AppBar(
+      //   title: const Text(kTimeline),
+      // ),
       body: Row(
         children: [
           Expanded(
