@@ -1,4 +1,3 @@
-import 'package:basilbaby/core/constants/strings.dart';
 import 'package:basilbaby/models/project.dart';
 import 'package:basilbaby/presentation/widgets/project_card.dart';
 import 'package:flutter/material.dart';
@@ -9,16 +8,16 @@ class ProjectPage extends StatefulWidget {
   const ProjectPage({super.key});
 
   @override
-  SkillsPageState createState() => SkillsPageState();
+  ProjectPageState createState() => ProjectPageState();
 }
 
-class SkillsPageState extends State<ProjectPage> {
+class ProjectPageState extends State<ProjectPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(
-        title: const Text(kProjects),
-      ),
+      // appBar: AppBar(
+      //   title: const Text(kProjects),
+      // ),
       body: ResponsiveProjectGrid(projects: projects),
     );
   }
@@ -67,7 +66,7 @@ class ResponsiveProjectGrid extends HookWidget {
   }
 
   Widget _buildGridView(BoxConstraints constraints) {
-    final crossAxisCount = (constraints.maxWidth / 300).floor();
+    final crossAxisCount = (constraints.maxWidth / 350).floor();
     return AnimationLimiter(
       child: Padding(
         padding: const EdgeInsets.all(8.0),

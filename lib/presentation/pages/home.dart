@@ -3,6 +3,7 @@ import 'package:basilbaby/core/constants/strings.dart';
 import 'package:basilbaby/models/social.dart';
 import 'package:basilbaby/presentation/widgets/skills_background.dart';
 import 'package:basilbaby/presentation/widgets/social_media_icon.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_animate/flutter_animate.dart';
 import 'package:go_router/go_router.dart';
@@ -24,7 +25,10 @@ class HomeScreen extends StatelessWidget {
             child: SafeArea(
               child: Stack(
                 children: [
-                  AnimatedBackground(child: _buildProfileSection(context)),
+                  if (isDesktop()) ...[
+                    AnimatedBackground(child: _buildProfileSection(context)),
+                  ],
+                  if (!isDesktop()) ...[_buildProfileSection(context)],
                   // Bottom Left Button
                   Positioned(
                     bottom: 40,
@@ -50,6 +54,16 @@ class HomeScreen extends StatelessWidget {
                 ],
               ),
             )));
+  }
+
+  bool isDesktop() {
+    if (kIsWeb &&
+        (defaultTargetPlatform == TargetPlatform.iOS ||
+            defaultTargetPlatform == TargetPlatform.android)) {
+      return false;
+    } else {
+      return true;
+    }
   }
 
   Widget _buildTrendyButton({
