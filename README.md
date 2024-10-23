@@ -19,7 +19,7 @@ If you enjoy this project, please consider leaving a ⭐ on the [GitHub reposito
 
 You can view the live demo of the portfolio app by clicking the button below:
 
-[![Click Here](https://img.shields.io/badge/Demo-Click%20Here-brightgreen)](https://basil-baby-94.github.io/basilbaby.github.io/)
+[![Click Here](https://img.shields.io/badge/Demo-Click%20Here-brightgreen)](https://basil-baby-94.github.io/)
 
 ## Screenshots and GIF
 
